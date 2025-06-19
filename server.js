@@ -37,6 +37,7 @@ app.get('/usuarios', async (req, res) => {
   res.status(200).json(users);
 });
 
+// sSEditar usuários
 app.put('/usuarios/:id', async (req, res) => {
 
   const user = await prisma.user.update({
@@ -53,6 +54,7 @@ app.put('/usuarios/:id', async (req, res) => {
   res.status(201).json(user);
 });
 
+// Deletar usuários
 app.delete('/usuarios/:id', async (req, res) => {
   await prisma.user.delete({
     where: {
