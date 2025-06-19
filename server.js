@@ -1,37 +1,31 @@
 import express from 'express';
+import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient();
 const app = express();
-app.use(express.json()); // Habilita o uso de req.body com JSON
+
+app.use(express.json());
 
 const users = [];
 
 // Criar usuário (POST)
-app.post('/usuarios', (req, res) => {
+app.post('/usuarios', async (req, res) => {
+  await prisma.user.create({
+    data: {
+      email: req.body.email,
+      name: req.body.name,
+      age: req.body.age
+    }
+  });
 
-  console.log(req.body); // mostra apenas os dados enviados
-
-  users.push(req.body); // adiciona o usuário à lista
-
-  res.status(201).json(req.body)
+  res.status(201).json(req.body);
 });
 
 // Listar todos os usuários (GET)
 app.get('/usuarios', (req, res) => {
-  res.status(200).json(users)
+  res.status(200).json(users);
 });
 
 app.listen(3000, () => {
   console.log('Servidor rodando na porta 3000');
 });
-
-
-
-/* 
-Objetivo:
-1. Criar usuários - POST /usuarios
-2. Listar todos os usuários - GET /usuarios
-3. Editar usuário - PUT /usuarios/:id
-4. Deletar usuário - DELETE /usuarios/:id
-guilhermefk123
-FqeesR50bofHJwoi
-*/

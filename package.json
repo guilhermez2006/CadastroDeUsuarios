@@ -19,6 +19,7 @@
   "homepage": "https://github.com/guilhermez2006/NodeJs-DevClub#readme",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^6.10.1",
     "espress": "^0.0.0",
     "express": "^5.1.0"
   },
