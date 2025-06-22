@@ -21,17 +21,23 @@ document.getElementById('btCadastrar').addEventListener('click', () => {
     .then(response => {
         if (response.ok) {
             return response.json();
+        } else if (response.status === 409) {
+            throw new Error('Usuário já cadastrado!');
         }
         throw new Error('Erro ao cadastrar usuário');
     })
     .then(data => {
-        usuarioId = data.id; // Salva o id retornado do backend
+        usuarioId = data.id;
         document.getElementById('nome').innerText = data.name;
         document.getElementById('idade').innerText = data.age;
         document.getElementById('email').innerText = data.email;
     })
     .catch(error => {
-        console.error('Erro:', error);
+        if (error.message === 'Usuário já cadastrado!') {
+            alert('Já existe um usuário com esse e-mail!');
+        } else {
+            console.error('Erro:', error);
+        }
     });
 });
 
@@ -47,7 +53,6 @@ document.getElementById('btn-lixeira').addEventListener('click', () => {
     .then(response => {
         if (response.ok) {
             alert('Usuário deletado com sucesso!');
-            // Limpa os campos na tela
             document.getElementById('nome').innerText = '';
             document.getElementById('idade').innerText = '';
             document.getElementById('email').innerText = '';
