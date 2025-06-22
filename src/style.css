@@ -1,0 +1,117 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #1a1446 0%, #2a226e 40%, #1b055a 100%);
+    font-family: 'Poppins', Arial, sans-serif;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container-principal {
+    background: linear-gradient(135deg, rgba(39, 28, 94, 0.95), rgba(60, 45, 145, 0.9));
+    width: 390px;
+    height: 350px;
+    margin: 0 auto;
+    margin-top: %;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+#title {
+    text-align: center;
+    color: #f0f0f0;
+}
+
+input {
+    display: flex;
+    margin-bottom: 15px;
+    padding: 13px;
+    border-radius: 15px;
+    width: 380px;
+    border: 1px solid #5a4db0;
+    background-color: rgba(72, 66, 145, 0.2);
+    color: #ffffff;
+    outline: none;
+}
+
+input::placeholder {
+    color: #d0cde1;
+}
+
+#btCadastrar {
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
+    background-color: #5a4db0;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: poppins, sans-serif;
+}
+
+#btCadastrar:hover {
+    background-color: #3e328b;
+}
+
+#img-lixeira {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#container-banco {
+    background: linear-gradient(135deg, rgba(39, 28, 94, 0.685), rgba(34, 26, 83, 0.644));
+    width: 390px;
+    min-height: 120px;
+    margin: 20px auto 0;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.info {
+    color: #ffffff;
+    display: flex;
+    padding: 5px 0;
+}
+
+.info p:first-child {
+    margin-right: 10px;
+    text-indent: -10%; /* Ajusta a indentação do texto */
+}
+
+#container-banco p {
+    margin: 0;
+}
+
+#btn-lixeira {
+    position: absolute;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    width: auto;
+    height: auto;
+    margin-left: auto;
+    bottom: 40%;
+    right: 10px;
+}
