@@ -6,7 +6,21 @@ const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 const app = express();
 
-app.use(cors());
+// Permitir CORS apenas para seu domínio do GitHub Pages
+const allowedOrigins = ['https://guilhermez2006.github.io'];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // permitir requests sem origin (como curl, postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `Acesso CORS negado para a origem: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
+
 app.use(express.json());
 
 // Criar usuário (POST)
@@ -45,7 +59,7 @@ app.get('/usuarios', async (req, res) => {
 app.delete('/usuarios/:id', async (req, res) => {
   try {
     await prisma.user.delete({
-      where: { id: req.params.id }
+      where: { id: Number(req.params.id) } // converte id para number
     });
     res.status(200).json({ message: 'Usuário deletado com sucesso!' });
   } catch (error) {
