@@ -21,7 +21,6 @@ app.post('/usuarios', async (req, res) => {
     });
     res.status(201).json(user);
   } catch (error) {
-    // Prisma retorna esse código para duplicidade de campo único
     if (error.code === 'P2002') {
       return res.status(409).json({ error: 'Usuário já cadastrado!' });
     }
@@ -54,6 +53,8 @@ app.delete('/usuarios/:id', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
