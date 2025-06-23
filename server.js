@@ -6,20 +6,25 @@ const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 const app = express();
 
-// Permitir CORS apenas para seu domínio do GitHub Pages
 const allowedOrigins = ['https://guilhermez2006.github.io'];
 
 app.use(cors({
   origin: function(origin, callback) {
-    // permitir requests sem origin (como curl, postman)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = `Acesso CORS negado para a origem: ${origin}`;
-      return callback(new Error(msg), false);
+      return callback(new Error('CORS negado para origem: ' + origin), false);
     }
     return callback(null, true);
-  }
+  },
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'], // incluir OPTIONS aqui
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Responder preflight OPTIONS
+app.options('*', cors());
+
+app.use(express.json());
+
 
 app.use(express.json());
 
