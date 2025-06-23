@@ -8,27 +8,28 @@ const app = express();
 
 const allowedOrigins = ['https://guilhermez2006.github.io'];
 
+// Configuração completa do CORS para aceitar preflight e liberar o front
 app.use(cors({
   origin: function(origin, callback) {
+    // Permitir requests sem origin (ex: Postman, curl)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
       return callback(new Error('CORS negado para origem: ' + origin), false);
     }
     return callback(null, true);
   },
-  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'], // incluir OPTIONS aqui
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Responder preflight OPTIONS
+// Middleware para responder requests OPTIONS (preflight)
 app.options('*', cors());
 
 app.use(express.json());
 
+// Rotas
 
-app.use(express.json());
-
-// Criar usuário (POST)
+// Criar usuário
 app.post('/usuarios', async (req, res) => {
   try {
     const user = await prisma.user.create({
@@ -47,7 +48,7 @@ app.post('/usuarios', async (req, res) => {
   }
 });
 
-// Listar todos os usuários (GET)
+// Listar usuários
 app.get('/usuarios', async (req, res) => {
   let users;
   if (req.query.name) {
@@ -60,11 +61,11 @@ app.get('/usuarios', async (req, res) => {
   res.status(200).json(users);
 });
 
-// Deletar usuário (DELETE)
+// Deletar usuário
 app.delete('/usuarios/:id', async (req, res) => {
   try {
     await prisma.user.delete({
-      where: { id: Number(req.params.id) } // converte id para number
+      where: { id: Number(req.params.id) }
     });
     res.status(200).json({ message: 'Usuário deletado com sucesso!' });
   } catch (error) {
