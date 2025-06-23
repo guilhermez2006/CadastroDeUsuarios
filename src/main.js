@@ -11,7 +11,7 @@ document.getElementById('btCadastrar').addEventListener('click', () => {
         email: email
     };
 
-    fetch('http://localhost:3000/usuarios', {
+    fetch('https://cadastrodeusuarios-ktktv0.onrender.com/usuarios', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ document.getElementById('btn-lixeira').addEventListener('click', () => {
         return;
     }
 
-    fetch(`http://localhost:3000/usuarios/${usuarioId}`, {
+    fetch(`https://cadastrodeusuarios-ktktv0.onrender.com/usuarios/${usuarioId}`, {
         method: 'DELETE'
     })
     .then(response => {
