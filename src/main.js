@@ -11,7 +11,7 @@ document.getElementById('btCadastrar').addEventListener('click', () => {
         email: email
     };
 
-    fetch('https://cadastrodeusuarios-ktktv0.onrender.com/usuarios', {
+    fetch('https://cadastrodeusuarios-1.onrender.com/usuarios', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -31,12 +31,14 @@ document.getElementById('btCadastrar').addEventListener('click', () => {
         document.getElementById('nome').innerText = data.name;
         document.getElementById('idade').innerText = data.age;
         document.getElementById('email').innerText = data.email;
+        alert('Usuário cadastrado com sucesso!');
     })
     .catch(error => {
         if (error.message === 'Usuário já cadastrado!') {
             alert('Já existe um usuário com esse e-mail!');
         } else {
             console.error('Erro:', error);
+            alert('Erro ao conectar com o servidor. Verifique o console.');
         }
     });
 });
@@ -47,7 +49,8 @@ document.getElementById('btn-lixeira').addEventListener('click', () => {
         return;
     }
 
-    fetch(`https://cadastrodeusuarios-ktktv0.onrender.com/usuarios/${usuarioId}`, {
+    // LINK ATUALIZADO PARA O SEU NOVO SERVIÇO NO RENDER
+    fetch(`https://cadastrodeusuarios-1.onrender.com/usuarios/${usuarioId}`, {
         method: 'DELETE'
     })
     .then(response => {
