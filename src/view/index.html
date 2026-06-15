@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Usuários</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <main>
+      <section id="auth-container" class="container-principal">
+        <h1 id="title">Bem-vindo</h1>
+
+        <div id="login-form">
+          <input type="email" id="login-email" placeholder="Email" />
+          <input type="password" id="login-password" placeholder="Senha" />
+          <button id="btLogin" class="btn-primary">Entrar</button>
+
+          <p class="toggle-text">
+            Não tem conta?
+            <span id="go-to-cadastro"> Cadastre-se </span>
+          </p>
+        </div>
+
+        <div id="cadastro-form" class="hidden">
+          <input type="text" id="cad-nome" placeholder="Nome" />
+          <input type="number" id="cad-idade" placeholder="Idade" />
+          <input type="email" id="cad-email" placeholder="Email" />
+          <input type="password" id="cad-password" placeholder="Senha" />
+          <button id="btCadastrar" class="btn-primary">Criar Conta</button>
+
+          <p class="toggle-text">
+            Já possui conta?
+            <span id="go-to-login"> Entrar </span>
+          </p>
+        </div>
+      </section>
+
+      <section id="dashboard-container" class="hidden">
+        <header class="dash-header">
+          <div>
+            <h2>Sistema de Usuários</h2>
+            <small id="total-users"> Carregando... </small>
+          </div>
+
+          <button id="btLogout" class="btn-logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Sair
+          </button>
+        </header>
+
+        <input type="text" id="pesquisa" placeholder="Pesquisar usuário..." />
+
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Idade</th>
+              <th>Email</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="lista-usuarios-body"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <div id="edit-modal" class="hidden">
+      <div class="modal-content">
+        <h2>Editar Usuário</h2>
+        <input type="text" id="edit-name" placeholder="Nome" />
+        <input type="number" id="edit-age" placeholder="Idade" />
+        <input type="email" id="edit-email" placeholder="Email" />
+
+        <div class="modal-buttons">
+          <button id="btSalvar" class="btn-primary">Salvar</button>
+          <button id="btCancelar" class="btn-logout">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
