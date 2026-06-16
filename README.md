@@ -1,6 +1,6 @@
-# NodeJs-DevClub 👥
+# Cadastro de Usuários - API 👥
 
-Sistema de cadastro de usuários. Construído com Node.js, Express e Prisma com MongoDB Atlas.
+Sistema de cadastro de usuários com autenticação JWT, CRUD completo, validações e arquitetura MVC. Construída com Node.js, Express e Prisma com MongoDB Atlas.
 
 ## Tecnologias
 
@@ -8,60 +8,85 @@ Sistema de cadastro de usuários. Construído com Node.js, Express e Prisma com 
 - Express
 - Prisma ORM
 - MongoDB Atlas
+- JSON Web Token (JWT)
+- Bcryptjs
 
 ## Como rodar o projeto
 
-1. Clonar o repositório
-   ```
-   git clone https://github.com/guilhermez2006/NodeJs-DevClub.git
-   cd NodeJs-DevClub
-   ```
+### 1. Clone o repositório
+```bash
+git clone [https://github.com/guilhermez2006/CadastroDeUsuarios](https://github.com/guilhermez2006/CadastroDeUsuarios)
+cd CadastroDeUsuarios
+```
 
-2. Instale as dependências
-   ```
-   npm install
-   ```
+### 2. Instale as dependências
+```bash
+npm install
+npm install cors
+```
 
-3. Configure o banco de dados
-   Crie um arquivo `.env` na raiz do projeto:
-   ```
-   DATABASE_URL="mongodb+srv://usuario:senha@cluster.mongodb.net/NomeDoBanco?appName=nome"
-   ```
+### 3. Configure o banco de dados
+Crie um arquivo `.env` na raiz do projeto e adicione suas credenciais:
+```env
+DATABASE_URL="mongodb+srv://usuario:senha@cluster.mongodb.net/NomeDoBanco?appName=nome"
+JWT_SECRET=suaChaveSecretaAqui123!@#
+```
 
-4. Sincronize o banco e gere o cliente do Prisma
-   ```
-   npx prisma db push
-   npx prisma generate
-   ```
+### 4. Sincronize o banco e gere o client do Prisma
+```bash
+npx prisma db push
+npx prisma generate
+```
 
-5. Rode o servidor
-   ```
-   node server.js
-   ```
-   O servidor sobe em http://localhost:3000
+### 5. Rode o servidor
+```bash
+node --watch server.js
+```
+
+O servidor sobe em `http://localhost:3000`
 
 ## Rotas disponíveis
 
-### Usuários
+### Autenticação (públicas)
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| POST | /cadastro | Cria um novo usuário |
+| POST | /login | Autentica e retorna o token JWT |
 
-| Método | Rota          | Descrição              |
-|--------|---------------|------------------------|
-| POST   | /usuarios    | Cria um novo usuário  |
-| GET    | /usuarios    | Lista todos os usuários (opcional: ?name=nome) |
-| DELETE | /usuarios/:id | Remove um usuário     |
-| DELETE | /usuarios/:id | Remove um usuário     |
+### Usuários (protegidas — requer token JWT)
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | /usuarios | Lista todos os usuários cadastrados |
+| GET | /usuarios/:id | Busca um usuário específico por ID |
+| PUT | /usuarios/:id | Edita as informações de um usuário |
+| DELETE | /usuarios/:id | Remove um usuário do sistema |
+
+> Para acessar as rotas protegidas, envie o token no header da requisição:
+> `Authorization: Bearer <seu_token>`
 
 ## Estrutura do projeto
 
-```
+```text
+CadastroDeUsuarios/
 ├── prisma/
 │   └── schema.prisma
 ├── src/
-│   └── main.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   └── userController.js
+│   ├── Middlewares/
+│   │   └── auth.js
+│   ├── model/
+│   │   └── user.js
+│   └── routes/
+│       └── userRoutes.js
+├── css/
+│   └── style.css
 ├── img/
-├── index.html
-├── style.css
-├── server.js
+├── js/
+│   └── script.js
+├── .env
 ├── package.json
-└── LICENSE
+├── index.html
+└── server.js
 ```
