@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-const prisma = new PrismaClient();
+import { buscarPorEmail } from "../model/user.js";
 
 export const login = async (req, res) => {
   try {
@@ -14,11 +12,7 @@ export const login = async (req, res) => {
       });
     }
 
-    const user = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
+    const user = await buscarPorEmail(email);
 
     if (!user) {
       return res.status(404).json({

@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
+import { criar, listar, editar, deletar } from "../model/user.js";
 
 const nameRegex = /^[A-Za-zÀ-ÿ\s]{3,50}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,24 +49,17 @@ export const createUser = async (req, res) => {
     const password = req.body.password;
 
     const hashPassword = await bcrypt.hash(password, 10);
-    
-    // CORRIGIDO: Removido os dados mocados e corrigido o erro de sintaxe do req.
-    const user = await prisma.user.create({
-      data: {
-        name,
-        age,
-        email,
-        password: hashPassword,
-      },
-      select: {
-        id: true,
-        name: true,
-        age: true,
-        email: true,
-      }
+
+    const user = await criar({
+      name,
+      age,
+      email,
+      password: hashPassword,
     });
 
-    return res.status(201).json(user);
+    const { password: _, ...userWithoutPassword } = user;
+
+    return res.status(201).json(userWithoutPassword);
   } catch (error) {
     console.error(error);
 
@@ -86,19 +77,10 @@ export const createUser = async (req, res) => {
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await prisma.user.findMany({
-      select: {
-        id: true,
-        name: true,
-        age: true,
-        email: true,
-      },
-      orderBy: {
-        name: "asc",
-      },
-    });
+    const users = await listar();
+    const usersWithoutPassword = users.map(({ password, ...rest }) => rest);
 
-    return res.status(200).json(users);
+    return res.status(200).json(usersWithoutPassword);
   } catch (error) {
     console.error(error);
 
@@ -113,7 +95,7 @@ export const updateUser = async (req, res) => {
     const erro = validarUsuario(
       {
         ...req.body,
-        password: "Senha123", // Apenas para passar na validação de campos obrigatórios
+        password: "Senha123",
       },
       false,
     );
@@ -124,24 +106,15 @@ export const updateUser = async (req, res) => {
       });
     }
 
-    const user = await prisma.user.update({
-      where: {
-        id: req.params.id,
-      },
-      data: {
-        name: req.body.name.trim(),
-        age: Number(req.body.age),
-        email: req.body.email.trim().toLowerCase(),
-      },
-      select: {
-        id: true,
-        name: true,
-        age: true,
-        email: true,
-      },
+    const user = await editar(req.params.id, {
+      name: req.body.name.trim(),
+      age: Number(req.body.age),
+      email: req.body.email.trim().toLowerCase(),
     });
 
-    return res.status(200).json(user);
+    const { password: _, ...userWithoutPassword } = user;
+
+    return res.status(200).json(userWithoutPassword);
   } catch (error) {
     console.error(error);
 
@@ -159,11 +132,7 @@ export const updateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    await prisma.user.delete({
-      where: {
-        id: req.params.id,
-      },
-    });
+    await deletar(req.params.id);
 
     return res.status(200).json({
       message: "Usuário removido com sucesso.",
