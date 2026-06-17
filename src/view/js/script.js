@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "https://api-cadastrousuarios.onrender.com";
 
 const authContainer = document.getElementById("auth-container");
 const dashboardContainer = document.getElementById("dashboard-container");
