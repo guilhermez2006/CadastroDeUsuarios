@@ -2,10 +2,6 @@
 
 Sistema de cadastro de usuários com autenticação JWT, CRUD completo, validações e arquitetura MVC. Construída com Node.js, Express e Prisma com MongoDB Atlas.
 
-## Preview
-
-![Preview](./img/lixeira.png)
-
 ## Tecnologias
 
 - Node.js
