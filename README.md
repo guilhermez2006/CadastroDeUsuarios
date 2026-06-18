@@ -4,8 +4,6 @@ Sistema de cadastro de usuários com autenticação JWT, CRUD completo, validaç
 
 ## Preview
 
-> Adicione uma imagem do projeto aqui.
-
 ![Preview](./img/lixeira.png)
 
 ## Tecnologias
